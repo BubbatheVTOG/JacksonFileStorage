@@ -6,7 +6,7 @@ import java.io.*;
 public class Jackson{
 
 	//.sgf and .sgf.tgz file names in the recording directory are unique.
-	private HashMap<String,Bubba> FileMap = new HashMap<>();
+	private HashMap<String,MarkableFile> FileMap = new HashMap<>();
 
 	public static void main(String[] args){
 		new Jackson();
@@ -33,7 +33,7 @@ public class Jackson{
                                   if(!FileMap.containsKey(file.getName())){
 					FileMap.get(file.getName()).keep = true;
 				  }else{
-					  Bubba curFile = new Bubba(file.getName());
+					  MarkableFile curFile = new MarkableFile(file.getName());
 					  curFile.keep = true;
 					  FileMap.put(curFile.getName(),curFile);
 				  }
@@ -51,9 +51,9 @@ public class Jackson{
 		}
 	}
 
-	private class Bubba extends File{
+	private class MarkableFile extends File{
 		protected boolean keep = false;
-		public Bubba(String file){ super(file); }
+		public MarkableFile(String file){ super(file); }
 	}
 }
 
