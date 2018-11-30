@@ -5,7 +5,7 @@ import java.io.*;
 
 public class Jackson{
 
-	//.sgf and .sgf.tgz files in the recording directory are unique.
+	//.sgf and .sgf.tgz file names in the recording directory are unique.
 	private HashMap<String,Bubba> FileMap = new HashMap<>();
 
 	public static void main(String[] args){
@@ -16,7 +16,7 @@ public class Jackson{
 		//Step 0: fill it.
 		this.fill();
 		//Step 1: query it.
-		FileMap.containsKey(new Bubba("something.txt"));
+		FileMap.containsKey("something.txt");
 		//Step 2: mark and sweep.
 		//This is expensive.
 		this.markAndSweep();
@@ -31,10 +31,10 @@ public class Jackson{
                           for(File file : Files){
                                   //check that it isn't already added.
                                   if(!FileMap.containsKey(file.getName())){
-					FileMap.get(file.getName()).good = true;
+					FileMap.get(file.getName()).keep = true;
 				  }else{
 					  Bubba curFile = new Bubba(file.getName());
-					  curFile.good = true;
+					  curFile.keep = true;
 					  FileMap.put(curFile.getName(),curFile);
 				  }
 			  }
@@ -43,8 +43,8 @@ public class Jackson{
 
 	public void markAndSweep(){
 		for(String K : FileMap.keySet()){
-			if(FileMap.get(K).good == true){
-				FileMap.get(K).good = false;
+			if(FileMap.get(K).keep == true){
+				FileMap.get(K).keep = false;
 			} else {
 				FileMap.remove(K);
 			}
@@ -52,7 +52,7 @@ public class Jackson{
 	}
 
 	private class Bubba extends File{
-		protected boolean good = false;
+		protected boolean keep = false;
 		public Bubba(String file){ super(file); }
 	}
 }
